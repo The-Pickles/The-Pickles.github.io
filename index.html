@@ -36,25 +36,47 @@
         .container {
             padding: 20px;
         }
-        .recipe-card {
-            text-align: center;
-            background-color: white;
-            width: 35%;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .ingredient-buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
-        .recipe-card img {
-            text-align: center;
-            width: 75%;
-            border-radius: 8px;
+        .ingredient-buttons button:hover {
+            background-color: #45a049;
         }
-        .recipe-card h2 {
-            color: #333;
+        .ingredient-list {
+            list-style-type: none;
+            padding: 0;
         }
-        .recipe-card p {
-            color: #555;
+        .ingredient-list li {
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .ingredient-list li button {
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .ingredient-recipe-to-button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -67,36 +89,108 @@
 
 <nav>
     <a href="index.html">Home</a>
-    <a href="#">Breakfast</a>
-    <a href="#">Lunch</a>
+    <a href="breakfast.html">Breakfast</a>
+    <a href="lunch.html">Lunch</a>
     <a href="dinner.html">Dinner</a>
-    <a href="#">Desserts</a>
-    <a href="#">Contact</a>
+    <a href="dessert.html">Desserts</a>
+    <a href="allrecipes.html">All Recipes</a>
 </nav>
 
 <div class="container">
-    <h2>Featured Recipes</h2>
+    <div class="ingredient-buttons">
+        <h3>Type an Ingredient:</h3>
+        <input type="text" id="ingredient" value=""> 
 
-    <div class="recipe-card">
-        <img src="https://i.ebayimg.com/images/g/8rQAAOSwflNl60RS/s-l1200.jpg" width="50" height="100" alt="Recipe Image">
-        <h2>Spaghetti Carbonara</h2>
-        <p>Enjoy this classic Italian pasta with a creamy, savory sauce and crispy pancetta.</p>
-        <a href="#">Read Full Recipe</a>
-    </div>
-
-    <div class="recipe-card">
-        <img src="https://www.allrecipes.com/thmb/I2_6wAak8sOny0gc9Mkt4tRhlUk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/150306-TheBestFriedChickenSteak-mfs-1X2--5166ee0334cc446f9164b76f8726fa64.jpg" width=50% height=50% alt="Recipe Image">
-        <h2>Chocolate Cake</h2>
-        <p>This rich and moist chocolate cake is perfect for any occasion. Topped with creamy chocolate frosting!</p>
-        <a href="#">Read Full Recipe</a>
-    </div>
-
-    <div class="recipe-card">
-        <img src="https://embed.widencdn.net/img/beef/cpybixdjbt/1120x840px/cowboy-beef-stew.tif?keep=c&u=7fueml" alt="Recipe Image">
-        <h2>Chicken Caesar Salad</h2>
-        <p>A fresh and light salad with grilled chicken, crispy croutons, and Caesar dressing.</p>
-        <a href="#">Read Full Recipe</a>
+        <h3>Your Selected Ingredients:</h3>
+        <ul id="ingredient-list" class="ingredient-list">
+            <!-- Selected ingredients will be added here -->
+        </ul>
+        <button onclick="goToRecipePage()">Find Recipe</button>
     </div>
 </div>
+
+<script>
+    // Add an event listener to the input field for the Enter key
+    const ingredientInput = document.getElementById("ingredient");
+
+    ingredientInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent form submission if the input is part of a form
+
+            const ingredient = ingredientInput.value.trim(); // Get the ingredient from the input field
+            if (ingredient !== "") {
+                addIngredient(ingredient);
+                ingredientInput.value = ""; // Clear the input field after adding
+            }
+        }
+    });
+
+    // Function to add ingredients to the list
+    function addIngredient(ingredient) {
+        const list = document.getElementById("ingredient-list");
+
+        // Check if the ingredient is already in the list
+        if (!Array.from(list.children).some(li => li.textContent.includes(ingredient))) {
+            const listItem = document.createElement("li");
+            listItem.textContent = ingredient;
+            
+            // Create a remove button
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "Remove";
+            removeButton.onclick = function() {
+                listItem.remove();
+                updateLocalStorage();
+            };
+
+            // Append the button to the list item
+            listItem.appendChild(removeButton);
+            list.appendChild(listItem);
+
+            // Update localStorage
+            updateLocalStorage();
+        } else {
+            alert(ingredient + " is already in your list.");
+        }
+    }
+
+    // Function to update the ingredient list in localStorage
+    function updateLocalStorage() {
+        const ingredients = [];
+        const listItems = document.getElementById("ingredient-list").getElementsByTagName('li');
+        for (let item of listItems) {
+            ingredients.push(item.firstChild.textContent);
+        }
+        localStorage.setItem('ingredients', JSON.stringify(ingredients));
+    }
+
+    // Function to load the ingredients from localStorage when the page loads
+    function loadIngredients() {
+        const ingredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+
+        ingredients.forEach(ingredient => {
+            const listItem = document.createElement('li');
+            listItem.textContent = ingredient;
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.onclick = function () {
+                listItem.remove();
+                updateLocalStorage();
+            };
+
+            listItem.appendChild(removeButton);
+            document.getElementById("ingredient-list").appendChild(listItem);
+        });
+    }
+
+    // Load ingredients when the page is loaded
+    window.onload = loadIngredients;
+
+    // Function to go to the recipe page
+    function goToRecipePage() {
+        window.location.href = "recipe.html"; // Redirect to recipe.html
+    }
+</script>
+
 </body>
 </html>

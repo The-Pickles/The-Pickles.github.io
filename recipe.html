@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dinner Recipes</title>
+    <title>Recipe Website</title>
     <style>
-        /* Same styling as before */
         body {
             font-family: Arial, sans-serif;
             background-color: #d3edaf;
@@ -59,7 +58,7 @@
         }
     </style>
 </head>
-<body id="dinner">
+<body>
 
 <header>
     <h1>Welcome to the Pickle Jar</h1>
@@ -68,21 +67,36 @@
 
 <nav>
     <a href="index.html">Home</a>
-    <a href="breakfast.html">Breakfast</a>
-    <a href="lunch.html">Lunch</a>
+    <a href="#">Breakfast</a>
+    <a href="#">Lunch</a>
     <a href="dinner.html">Dinner</a>
-    <a href="dessert.html">Dessert</a>
-    <a href="allrecipes.html">All Recipes</a>
+    <a href="dessert.html">Desserts</a>
+    <a href="#">All Recipes</a>
 </nav>
 
 <div class="container">
-    <h2>Dinner Recipes</h2>
-    <div id="recipe-list">
-        <!-- Dinner recipes will be dynamically added here -->
+    <h2>Dessert Recipes</h2>
+
+    <div class="recipe-card">
+        <img src="https://i.ebayimg.com/images/g/8rQAAOSwflNl60RS/s-l1200.jpg" width="50" height="100" alt="Recipe Image">
+        <h2>Spaghetti Carbonara</h2>
+        <p>Enjoy this classic Italian pasta with a creamy, savory sauce and crispy pancetta.</p>
+        <a href="#">Read Full Recipe</a>
+    </div>
+
+    <div class="recipe-card">
+        <img src="https://www.allrecipes.com/thmb/I2_6wAak8sOny0gc9Mkt4tRhlUk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/150306-TheBestFriedChickenSteak-mfs-1X2--5166ee0334cc446f9164b76f8726fa64.jpg" width=50% height=50% alt="Recipe Image">
+        <h2>Chocolate Cake</h2>
+        <p>This rich and moist chocolate cake is perfect for any occasion. Topped with creamy chocolate frosting!</p>
+        <a href="#">Read Full Recipe</a>
+    </div>
+
+    <div class="recipe-card">
+        <img src="https://embed.widencdn.net/img/beef/cpybixdjbt/1120x840px/cowboy-beef-stew.tif?keep=c&u=7fueml" alt="Recipe Image">
+        <h2>Chicken Caesar Salad</h2>
+        <p>A fresh and light salad with grilled chicken, crispy croutons, and Caesar dressing.</p>
+        <a href="#">Read Full Recipe</a>
     </div>
 </div>
-
-<!-- Link to the external recipe.js file -->
-<script src="recipe.js"></script>
 </body>
 </html>
