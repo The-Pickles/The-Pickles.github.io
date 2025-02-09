@@ -61,8 +61,8 @@
         /* Sparkle effect */
         .sparkle {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 3px; /* Smaller sparkle size */
+            height: 3px; /* Smaller sparkle size */
             background-color: #76b947; /* Pickle green color */
             border-radius: 50%;
             pointer-events: none; /* So it doesn't block clicks */
@@ -75,7 +75,7 @@
                 opacity: 1;
             }
             50% {
-                transform: scale(2);
+                transform: scale(1.2);  /* Slightly bigger to give a more "twinkly" effect */
                 opacity: 0.7;
             }
             100% {
@@ -111,21 +111,25 @@
 <script>
     // Sparkle effect when mouse moves
     document.addEventListener('mousemove', function(event) {
-        createSparkle(event.clientX, event.clientY);
+        createSparkles(event.clientX, event.clientY);
     });
 
-    function createSparkle(x, y) {
-        const sparkle = document.createElement('div');
-        sparkle.classList.add('sparkle');
-        sparkle.style.left = `${x - 4}px`;  // Center sparkle on cursor
-        sparkle.style.top = `${y - 4}px`;
+    function createSparkles(x, y) {
+        // Create multiple smaller sparkles, and space them further apart
+        for (let i = 0; i < 2; i++) {  // Reduced number of sparkles for thinner trail
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            sparkle.style.left = `${x - 5 + Math.random() * 10}px`;  // Reduced spread range to make the trail thinner
+            sparkle.style.top = `${y - 5 + Math.random() * 10}px`;   // Reduced spread range to make the trail thinner
+            sparkle.style.animationDuration = `${0.6 + Math.random() * 0.3}s`; // Slightly faster fade out
 
-        document.body.appendChild(sparkle);
+            document.body.appendChild(sparkle);
 
-        // Remove sparkle after animation
-        setTimeout(() => {
-            sparkle.remove();
-        }, 1000); // Match the animation duration
+            // Remove sparkle after animation
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1000); // Match the animation duration
+        }
     }
 </script>
 

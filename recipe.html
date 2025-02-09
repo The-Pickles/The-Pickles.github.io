@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Recipe Website</title>
+    <title>Dinner Recipes</title>
     <style>
+        /* Same styling as before */
         body {
             font-family: Arial, sans-serif;
             background-color: #d3edaf;
@@ -36,32 +37,59 @@
         .container {
             padding: 20px;
         }
-        .recipe-card {
-            text-align: center;
-            background-color: white;
-            width: 35%;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        .recipe-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .recipe-list li {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
         }
         .recipe-card img {
-            text-align: center;
-            width: 75%;
-            border-radius: 8px;
+            width: 50%;
+            height: 50%;
         }
-        .recipe-card h2 {
-            color: #333;
+        .ingredient-buttons button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
         }
-        .recipe-card p {
-            color: #555;
+        .ingredient-buttons button:hover {
+            background-color: #45a049;
+        }
+        .ingredient-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .ingredient-list li {
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .ingredient-list li button {
+            padding: 5px 10px;
+            background-color: #f44336;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
         /* Sparkle effect */
         .sparkle {
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 3px; /* Smaller sparkle size */
+            height: 3px; /* Smaller sparkle size */
             background-color: #76b947; /* Pickle green color */
             border-radius: 50%;
             pointer-events: none; /* So it doesn't block clicks */
@@ -74,7 +102,7 @@
                 opacity: 1;
             }
             50% {
-                transform: scale(2);
+                transform: scale(1.2);  /* Slightly bigger to give a more "twinkly" effect */
                 opacity: 0.7;
             }
             100% {
@@ -93,57 +121,84 @@
 
 <nav>
     <a href="index.html">Home</a>
-    <a href="#">Breakfast</a>
-    <a href="#">Lunch</a>
+    <a href="breakfast.html">Breakfast</a>
+    <a href="lunch.html">Lunch</a>
     <a href="dinner.html">Dinner</a>
-    <a href="dessert.html">Desserts</a>
-    <a href="#">All Recipes</a>
+    <a href="dessert.html">Dessert</a>
+    <a href="allrecipes.html">All Recipes</a>
 </nav>
 
 <div class="container">
-    <h2>Dessert Recipes</h2>
+    <h2>Recipes that Match your Ingredients</h2>
+    <ul id="recipe-list" class="recipe-list">
+        <!-- Matching recipes will be displayed here -->
+    </ul>
+</div>
 
-    <div class="recipe-card">
-        <img src="https://i.ebayimg.com/images/g/8rQAAOSwflNl60RS/s-l1200.jpg" width="50" height="100" alt="Recipe Image">
-        <h2>Spaghetti Carbonara</h2>
-        <p>Enjoy this classic Italian pasta with a creamy, savory sauce and crispy pancetta.</p>
-        <a href="#">Read Full Recipe</a>
-    </div>
+<script src="recipe.js"></script> <!-- Link to recipe.js with recipe data -->
 
-    <div class="recipe-card">
-        <img src="https://www.allrecipes.com/thmb/I2_6wAak8sOny0gc9Mkt4tRhlUk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/150306-TheBestFriedChickenSteak-mfs-1X2--5166ee0334cc446f9164b76f8726fa64.jpg" width=50% height=50% alt="Recipe Image">
-        <h2>Chocolate Cake</h2>
-        <p>This rich and moist chocolate cake is perfect for any occasion. Topped with creamy chocolate frosting!</p>
-        <a href="#">Read Full Recipe</a>
-    </div>
+<script>
+// Load the selected ingredients and type from localStorage
+const selectedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
+const recipeType = localStorage.getItem('recipeType') || "allrecipes"; // Default to "allrecipes" if no type specified
 
-    <div class="recipe-card">
-        <img src="https://embed.widencdn.net/img/beef/cpybixdjbt/1120x840px/cowboy-beef-stew.tif?keep=c&u=7fueml" alt="Recipe Image">
-        <h2>Chicken Caesar Salad</h2>
-        <p>A fresh and light salad with grilled chicken, crispy croutons, and Caesar dressing.</p>
-        <a href="#">Read Full Recipe</a>
-    </div>
-
-    <script>
-        // Sparkle effect when mouse moves
-        document.addEventListener('mousemove', function(event) {
-            createSparkle(event.clientX, event.clientY);
-        });
+// Function to find and display matching recipes based on ingredients and type
+function displayMatchingRecipes() {
+    const recipeList = document.getElementById("recipe-list");
     
-        function createSparkle(x, y) {
+    // Clear previous results
+    recipeList.innerHTML = '';
+
+    // Filter recipes by both type and matching ingredients
+    const matchingRecipes = recipes.filter(recipe => {
+        const matchesType = recipeType === "allrecipes" || recipe.type === recipeType;
+        const matchesIngredients = selectedIngredients.some(ingredient => recipe.description.toLowerCase().includes(ingredient.toLowerCase()));
+
+        return matchesType && matchesIngredients;
+    });
+
+    // If no recipes match, display a message
+    if (matchingRecipes.length === 0) {
+        recipeList.innerHTML = "<li>No recipes found with your ingredients and selected type.</li>";
+        return;
+    }
+
+    // Display matching recipes
+    matchingRecipes.forEach(recipe => {
+        const listItem = document.createElement("li");
+        listItem.innerHTML = recipe.displayRecipe();
+        recipeList.appendChild(listItem);
+    });
+}
+
+// Call the function to display recipes when the page loads
+window.onload = displayMatchingRecipes;
+</script>
+
+<script>
+    // Sparkle effect when mouse moves
+    document.addEventListener('mousemove', function(event) {
+        createSparkles(event.clientX, event.clientY);
+    });
+
+    function createSparkles(x, y) {
+        // Create multiple smaller sparkles, and space them further apart
+        for (let i = 0; i < 2; i++) {  // Reduced number of sparkles for thinner trail
             const sparkle = document.createElement('div');
             sparkle.classList.add('sparkle');
-            sparkle.style.left = `${x - 4}px`;  // Center sparkle on cursor
-            sparkle.style.top = `${y - 4}px`;
-    
+            sparkle.style.left = `${x - 5 + Math.random() * 10}px`;  // Reduced spread range to make the trail thinner
+            sparkle.style.top = `${y - 5 + Math.random() * 10}px`;   // Reduced spread range to make the trail thinner
+            sparkle.style.animationDuration = `${0.6 + Math.random() * 0.3}s`; // Slightly faster fade out
+
             document.body.appendChild(sparkle);
-    
+
             // Remove sparkle after animation
             setTimeout(() => {
                 sparkle.remove();
             }, 1000); // Match the animation duration
         }
-    </script>
-</div>
+    }
+</script>
+
 </body>
 </html>

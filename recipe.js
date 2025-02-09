@@ -14,8 +14,8 @@ class Recipe {
             <div class="recipe-card">
                 <img src="${this.image}" width="50%" height="50%" alt="Recipe Image">
                 <h2>${this.name}</h2>
-                <p>${this.description}</p>
-                <a href="${this.link}">Read Full Recipe</a>
+                <q>${this.description}</q>
+                <a href="${this.link}" target="_blank" rel="noopener noreferrer">Read Full Recipe</a>
             </div>
         `;
     }
@@ -31,16 +31,16 @@ const recipes = [
         "dinner"  // Mark this recipe as "dinner"
     ),
     new Recipe(
-        "Chocolate Cake",
+        "Chicken Fried Steak",
         "https://www.allrecipes.com/thmb/I2_6wAak8sOny0gc9Mkt4tRhlUk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/150306-TheBestFriedChickenSteak-mfs-1X2--5166ee0334cc446f9164b76f8726fa64.jpg",
-        "This rich and moist chocolate cake is perfect for any occasion. Topped with creamy chocolate frosting!",
-        "#",
+        "A Southern favorite, these crispy, breaded, tenderized cube steaks drenched in creamy gravy can be served for breakfast or dinner.",
+        "https://www.allrecipes.com/recipe/150306/the-best-chicken-fried-steak/",
         "dessert"  // Mark this recipe as "dessert"
     ),
     new Recipe(
-        "Chicken Caesar Salad",
-        "https://embed.widencdn.net/img/beef/cpybixdjbt/1120x840px/cowboy-beef-stew.tif?keep=c&u=7fueml",
-        "A fresh and light salad with grilled chicken, crispy croutons, and Caesar dressing.",
+        "Cowboy Beef Stew",
+        "https://www.beefitswhatsfordinner.com/recipes/recipe/1338/cowboy-beef-stew",
+        "Fill your house with the aroma of slowly cooked beef stew. The hearty combination of beans, beef and tomatoes will satisfy any hunger.",
         "#",
         "dinner"  // Mark this recipe as "dinner"
     ),
