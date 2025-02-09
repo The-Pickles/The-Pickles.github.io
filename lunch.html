@@ -57,6 +57,32 @@
         .recipe-card p {
             color: #555;
         }
+
+        /* Sparkle effect */
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #76b947; /* Pickle green color */
+            border-radius: 50%;
+            pointer-events: none; /* So it doesn't block clicks */
+            animation: sparkleAnimation 1s forwards;
+        }
+
+        @keyframes sparkleAnimation {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body id="lunch">
@@ -81,6 +107,27 @@
         <!-- Dinner recipes will be dynamically added here -->
     </div>
 </div>
+
+<script>
+    // Sparkle effect when mouse moves
+    document.addEventListener('mousemove', function(event) {
+        createSparkle(event.clientX, event.clientY);
+    });
+
+    function createSparkle(x, y) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        sparkle.style.left = `${x - 4}px`;  // Center sparkle on cursor
+        sparkle.style.top = `${y - 4}px`;
+
+        document.body.appendChild(sparkle);
+
+        // Remove sparkle after animation
+        setTimeout(() => {
+            sparkle.remove();
+        }, 1000); // Match the animation duration
+    }
+</script>
 
 <!-- Link to the external recipe.js file -->
 <script src="recipe.js"></script>
