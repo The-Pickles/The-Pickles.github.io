@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dinner Recipes</title>
     <style>
-        /* Same styling as before */
         body {
             font-family: Arial, sans-serif;
             background-color: #d3edaf;
@@ -37,62 +36,35 @@
         .container {
             padding: 20px;
         }
-        .recipe-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .recipe-list li {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 5px;
+        .recipe-card {
+            text-align: center;
+            background-color: white;
+            width: 35%;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .recipe-card img {
-            width: 50%;
-            height: 50%;
+            text-align: center;
+            width: 75%;
+            border-radius: 8px;
         }
-        .ingredient-buttons button {
-            padding: 10px 20px;
-            margin: 5px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
+        .recipe-card h2 {
+            color: #333;
         }
-        .ingredient-buttons button:hover {
-            background-color: #45a049;
-        }
-        .ingredient-list {
-            list-style-type: none;
-            padding: 0;
-        }
-        .ingredient-list li {
-            padding: 10px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            margin: 5px 0;
-            border-radius: 5px;
-        }
-        .ingredient-list li button {
-            padding: 5px 10px;
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .recipe-card p {
+            color: #555;
         }
 
         /* Sparkle effect */
         .sparkle {
             position: absolute;
-            width: 3px; /* Smaller sparkle size */
-            height: 3px; /* Smaller sparkle size */
-            background-color: #76b947; /* Pickle green color */
+            width: 3px;
+            height: 3px;
+            background-color: #76b947;
             border-radius: 50%;
-            pointer-events: none; /* So it doesn't block clicks */
+            pointer-events: none;
             animation: sparkleAnimation 1s forwards;
         }
 
@@ -102,7 +74,7 @@
                 opacity: 1;
             }
             50% {
-                transform: scale(1.2);  /* Slightly bigger to give a more "twinkly" effect */
+                transform: scale(1.2);
                 opacity: 0.7;
             }
             100% {
@@ -112,11 +84,11 @@
         }
     </style>
 </head>
-<body>
+<body id="dessert">
 
 <header>
     <h1>Welcome to the Pickle Jar</h1>
-    <p>For when your dinner plans are in a pickle!</p>
+    <p>For when your meal plans are in a pickle!</p>
 </header>
 
 <nav>
@@ -131,33 +103,29 @@
 <div class="container">
     <h2>Recipes that Match your Ingredients</h2>
     <ul id="recipe-list" class="recipe-list">
-        <!-- Matching recipes will be displayed here -->
     </ul>
 </div>
 
-<script src="recipe.js"></script> <!-- Link to recipe.js with recipe data -->
+<script src="recipe.js"></script>
 
 <script>
 // Load the selected ingredients and type from localStorage
 const selectedIngredients = JSON.parse(localStorage.getItem('ingredients')) || [];
-const recipeType = localStorage.getItem('recipeType') || "allrecipes"; // Default to "allrecipes" if no type specified
+const recipeType = localStorage.getItem('recipeType') || "allrecipes"; 
 
 // Function to find and display matching recipes based on ingredients and type
 function displayMatchingRecipes() {
     const recipeList = document.getElementById("recipe-list");
     
-    // Clear previous results
     recipeList.innerHTML = '';
 
-    // Filter recipes by both type and matching ingredients
     const matchingRecipes = recipes.filter(recipe => {
         const matchesType = recipeType === "allrecipes" || recipe.type === recipeType;
-        const matchesIngredients = selectedIngredients.some(ingredient => recipe.description.toLowerCase().includes(ingredient.toLowerCase()));
+        const matchesIngredients = selectedIngredients.every(ingredient => recipe.ingredients.toLowerCase().includes(ingredient.toLowerCase()));
 
         return matchesType && matchesIngredients;
     });
 
-    // If no recipes match, display a message
     if (matchingRecipes.length === 0) {
         recipeList.innerHTML = "<li>No recipes found with your ingredients and selected type.</li>";
         return;
@@ -171,7 +139,6 @@ function displayMatchingRecipes() {
     });
 }
 
-// Call the function to display recipes when the page loads
 window.onload = displayMatchingRecipes;
 </script>
 
@@ -182,20 +149,19 @@ window.onload = displayMatchingRecipes;
     });
 
     function createSparkles(x, y) {
-        // Create multiple smaller sparkles, and space them further apart
-        for (let i = 0; i < 2; i++) {  // Reduced number of sparkles for thinner trail
+        for (let i = 0; i < 2; i++) {
             const sparkle = document.createElement('div');
             sparkle.classList.add('sparkle');
-            sparkle.style.left = `${x - 5 + Math.random() * 10}px`;  // Reduced spread range to make the trail thinner
-            sparkle.style.top = `${y - 5 + Math.random() * 10}px`;   // Reduced spread range to make the trail thinner
-            sparkle.style.animationDuration = `${0.6 + Math.random() * 0.3}s`; // Slightly faster fade out
+            sparkle.style.left = `${x - 5 + Math.random() * 10}px`;
+            sparkle.style.top = `${y - 5 + Math.random() * 10}px`; 
+            sparkle.style.animationDuration = `${0.6 + Math.random() * 0.3}s`;
 
             document.body.appendChild(sparkle);
 
             // Remove sparkle after animation
             setTimeout(() => {
                 sparkle.remove();
-            }, 1000); // Match the animation duration
+            }, 1000);
         }
     }
 </script>

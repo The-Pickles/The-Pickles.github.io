@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dinner Recipes</title>
     <style>
-        /* Same styling as before */
         body {
             font-family: Arial, sans-serif;
             background-color: #d3edaf;
@@ -61,11 +60,11 @@
         /* Sparkle effect */
         .sparkle {
             position: absolute;
-            width: 3px; /* Smaller sparkle size */
-            height: 3px; /* Smaller sparkle size */
-            background-color: #76b947; /* Pickle green color */
+            width: 3px;
+            height: 3px;
+            background-color: #76b947;
             border-radius: 50%;
-            pointer-events: none; /* So it doesn't block clicks */
+            pointer-events: none;
             animation: sparkleAnimation 1s forwards;
         }
 
@@ -75,7 +74,7 @@
                 opacity: 1;
             }
             50% {
-                transform: scale(1.2);  /* Slightly bigger to give a more "twinkly" effect */
+                transform: scale(1.2);
                 opacity: 0.7;
             }
             100% {
@@ -104,7 +103,6 @@
 <div class="container">
     <h2>Lunch Recipes</h2>
     <div id="recipe-list">
-        <!-- Dinner recipes will be dynamically added here -->
     </div>
 </div>
 
@@ -115,25 +113,22 @@
     });
 
     function createSparkles(x, y) {
-        // Create multiple smaller sparkles, and space them further apart
-        for (let i = 0; i < 2; i++) {  // Reduced number of sparkles for thinner trail
+        for (let i = 0; i < 2; i++) { 
             const sparkle = document.createElement('div');
             sparkle.classList.add('sparkle');
-            sparkle.style.left = `${x - 5 + Math.random() * 10}px`;  // Reduced spread range to make the trail thinner
-            sparkle.style.top = `${y - 5 + Math.random() * 10}px`;   // Reduced spread range to make the trail thinner
-            sparkle.style.animationDuration = `${0.6 + Math.random() * 0.3}s`; // Slightly faster fade out
+            sparkle.style.left = `${x - 5 + Math.random() * 10}px`;
+            sparkle.style.top = `${y - 5 + Math.random() * 10}px`;
+            sparkle.style.animationDuration = `${0.6 + Math.random() * 0.3}s`; 
 
             document.body.appendChild(sparkle);
 
             // Remove sparkle after animation
             setTimeout(() => {
                 sparkle.remove();
-            }, 1000); // Match the animation duration
+            }, 1000);
         }
     }
 </script>
-
-<!-- Link to the external recipe.js file -->
 <script src="recipe.js"></script>
 </body>
 </html>

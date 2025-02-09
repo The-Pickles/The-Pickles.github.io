@@ -1,4 +1,3 @@
-// Define the Recipe class
 class Recipe {
     constructor(name, image, description, link, type, ingredients) {
         this.name = name;
@@ -9,7 +8,6 @@ class Recipe {
         this.ingredients = ingredients; 
     }
 
-    // Method to display the recipe as HTML
     displayRecipe() {
         return `
             <div class="recipe-card">
@@ -30,7 +28,7 @@ const recipes = [
         "Here’s an ooey-gooey treat that’s just right for campfires and cookouts.", 
         "https://www.tasteofhome.com/recipes/cherry-chocolate-pudgy-pie/#Reviews", 
         "dessert", 
-        "#"
+        "white bread, cherry pie filling, chopped almonds, semisweet chocolate chips"
     ), 
     new Recipe(
         "Chicken Fried Steak",
@@ -38,7 +36,7 @@ const recipes = [
         "A Southern favorite, these crispy, breaded, tenderized cube steaks drenched in creamy gravy can be served for breakfast or dinner.",
         "https://www.allrecipes.com/recipe/150306/the-best-chicken-fried-steak/",
         "dinner", 
-        "#"
+        "beef cube steaks, all-purpose flour, baking powder, baking soda, black pepper, salt, buttermilk, hot pepper sauce (e.g. Tabasco™), egg, garlic, vegetable shortening, milk"
     ),
     new Recipe(
         "Chicken 'n Waffles",
@@ -46,7 +44,7 @@ const recipes = [
         "Homemade Chicken and Waffles is a true soul food brunch dish that everyone loves.",
         "https://www.sweetteaandthyme.com/fried-chicken-waffles-spicy-honey-sauce/",
         "breakfast", 
-        "#"
+        "boneless skinless chicken thighs, Vegetable Oil, Buttermilk Brine, buttermilk OR soured whole milk* (see notes), salt, garlic powder, onion powder, hot sauce or chili powder, smoked paprika, all-purpose flour, cornstarch, baking powder, black pepper, honey or maple syrup, unsalted butter"
     ),
     new Recipe(
         "Chili",
@@ -54,7 +52,7 @@ const recipes = [
         "The Best Chili Recipe is one that is loaded with beef and beans and absolutely full of flavor… just like this one!",
         "https://www.spendwithpennies.com/the-best-chili-recipe/",
         "lunch", 
-        "#"
+        "lean ground beef, onion, jalapeño, garlic, chili powder, cumin, green bell pepper, tomatoes, red kidney beans, beef broth, beer, tomato paste, brown sugar, salt, black pepper"
     ), 
     new Recipe(
         "Cowboy Beef Stew",
@@ -62,7 +60,7 @@ const recipes = [
         "Fill your house with the aroma of slowly cooked beef stew. The hearty combination of beans, beef and tomatoes will satisfy any hunger.",
         "https://www.beefitswhatsfordinner.com/recipes/recipe/1338/cowboy-beef-stew",
         "dinner", 
-        "#"
+        "beef, beans, tomatoes, green peppers, onion, vegitable oil, beef broth, hash-brown potatoes"
     ),
     new Recipe(
         "Cowboy Cookies", 
@@ -70,7 +68,7 @@ const recipes = [
         "Searching for the best cowboy cookies recipe? THIS IS IT!", 
         "https://bakerbynature.com/the-best-cowboy-cookies-recipe/", 
         "dessert", 
-        "#"
+        "butter, sugar, eggs, vanilla extract, baking soda, cinnamon, salt, oats, coconut, pecans, chocolate chips"
     ),
     new Recipe(
         "Cowboy Skillet Potato Hash",
@@ -78,7 +76,7 @@ const recipes = [
         "From Table for Two’s cookbook it is full of flavorful recipes like this cowboy skillet potato hash fit just for two.",
         "https://homemadehome.com/cowboy-skillet-hash/",
         "breakfast", 
-        "#"
+        "chorizo, onion, bell pepper, potatoes, salt, pepper, sour cream, cilantro, hot sauce"
     ),
     new Recipe(
         "Loaded Baked Potatoes",
@@ -86,7 +84,7 @@ const recipes = [
         "Who doesn't love a good baked potato?",
         "https://www.delish.com/cooking/recipe-ideas/a43853/loaded-baked-potatoes-bacon-cheddar-recipe/",
         "lunch", 
-        "#"
+        "potatoes, olive oil, scallions, butter, chives, sour cream, shredded cheese, bacon, salt, pepper"
     ),
     new Recipe(
         "Pan Fried Pork Chops",
@@ -94,7 +92,7 @@ const recipes = [
         "Delicious and simple! Serve with smashed new potatoes.",
         "https://www.foodnetwork.com/recipes/ree-drummond/pan-fried-pork-chops-recipe-1989074",
         "dinner", 
-        "#"
+        "salt, pepper, pork chops, flour, cayenne pepper, canola oil, butter, potatoes"
     ),
     new Recipe(
         "Peach Cobbler", 
@@ -102,7 +100,7 @@ const recipes = [
         "This old fashioned Peach Cobbler recipe is not only extremely easy to make from scratch, but it’s made with fresh or canned peaches so you can enjoy it all year round!", 
         "https://tastesbetterfromscratch.com/peach-cobbler/", 
         "dessert", 
-        "#"
+        "peaches, sugar, salt, butter, flour, baking powder, milk, cinnamon"
     ),
     new Recipe(
         "Southwest Barley & Lentil Soup",
@@ -110,16 +108,14 @@ const recipes = [
         "My family makes lentil soup every new year for good luck.",
         "https://www.tasteofhome.com/recipes/southwest-barley-lentil-soup/",
         "lunch", 
-        "#"
+        "olive oil, sausage, carrots, onion, garlic, cumin, tomatoes, lentils, beans, barley, corn, chicken broth"
     )
 ];
 
-// Function to display recipes based on type passed (either "breakfast", "lunch", "dinner", "dessert", or "allrecipes")
 function displayRecipesByType(type) {
     const recipeContainer = document.getElementById("recipe-list");
     const filteredRecipes = recipes.filter(recipe => type === "allrecipes" || recipe.type === type);
 
-    // Clear any previous content
     recipeContainer.innerHTML = '';
 
     filteredRecipes.forEach(recipe => {
@@ -127,9 +123,8 @@ function displayRecipesByType(type) {
     });
 }
 
-// Call the displayRecipesByType function when the page is loaded
 window.onload = function() {
-    const pageType = document.body.id; // We use body ID to detect the page type (breakfast, lunch, dinner, dessert, or allrecipes)
+    const pageType = document.body.id;
     if (pageType) {
         displayRecipesByType(pageType);
     }
